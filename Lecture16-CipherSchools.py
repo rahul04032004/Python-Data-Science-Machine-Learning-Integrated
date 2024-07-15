@@ -1,141 +1,106 @@
-#Data Manipulation and Analysis with NumPy
-#NumPY is a fundamentak package for scientific computing with Python. It provides support for arrays, matrices,and a large collection of mathematical function to operate on these data structure. NumPy arrays are more efficient and provide better performance for numerical operations compared to pyhton's built -in lists.
+#Working with Data using Pandas
+#Pandas is a powerful and flexible open-source data analysis and manipulation library for python.
+#It provides data structures like series (one-dimentional) and Data-Frame (two-Dimentional) that are efficient for handling large datasets.
+#Pandas allows for data manipulation,aggregation and merging.
 
-#First install the library -------->>>>>>  #pip install library name
-#then import the library where we have to use that library -------->>>>>> import library name
+#USE case in real life
+#Pandas can be used in various data analysis scenarios, such as customer data analysis, financial data analysis, and marketing campaign analysis.
 
-#create a NumPy Array from a list
-import numpy as np
-#Creating a 1d array from a list
-arr1 = np.array([1,2,3,4,5])
-print(arr1)
-
-#create a 2D array from a list of lists
-arr2 = np.array([[1,2,3],[4,5,6]])
-print(arr2)
-
-
-
-#Creating Arrays with Functions
-#create an array as zeros
-zeros = np.zeros((3,4))
-print(zeros)
+#Creating a DataFrame from a Dictionary
+pip install pandas
+import pandas as pd
+#creating a DataFrame from a Dictionary
+data = {
+  'Name': ['Alice', 'Bob', 'Charlie'],
+  'Age': [25,30,35],
+  'City': ['New York', 'Los Angeles', 'Chicago']
+}
+df = pd.DataFrame(data)
+print(df)
 
 
-#create an array of ones
-ones = np.ones((3,4))
-print(ones)
+#Creating a DataFrame from a List of Dictionaries
+
+data = [
+  {'Name': 'Alice', 'Age': 25, "City': 'New York'},
+  {'Name': 'Bob', 'Age': 30, "City': 'Los Angeles'},
+  {'Name': 'Charlie', 'Age': 35, "City': 'Chicago'}
+   ]
+df = pd.DataFrame(data)
 
 
-#Creating an array with a range of values
-range_Arr = np.arange(start=10, stop=20, step=2) or range_Arr = np.arange(10,20,2) #20 will not print ,stop is exclusive
-print(range_Arr)
+#Creating a DataFrame from a CSV File
+
+#Assuming 'data.csv' is a csv file in the current directory
+df = pd.read_csv('dataset.csv') #dataset.csv is file name
+print(df)
 
 
-#Creating an array with random values
-random_arr = np.random.rand(3,3)
-print(random_arr)
+#Viewing Data
+#Displaying the first few rows
+print(df.head()) #By default it will first 5 rows
+print(df.head(10)) #now it will print top 10 rows
+
+#Displaying the last few rows
+print(df.tail())
+
+#Getting information about the DataFrame
+print(df.info())
+
+#Descriptive Statistics
+print(df.describe())
+
+#Selecting Columns
+#Selecting a single column
+print(df['Name']) #will only print single column
+
+#Selecting multiple columns
+print(df[['Name','City']])
+
+#Filtering Rows
+#Filtering rows based on a condition
+print(df[df['Age'] >30])
+
+#Adding a new Column
+df['Salary'] = [50000,60000,70000,80000,90000]
+print(df)
+
+#Modifying an Existing Columns
+df['Age'] = df['Age'] + 1
+print(df)
+
+#Dropping Columns and Column
+#Dropping a Column
+df = df.drop(columns=['Salary'])
+print(df)
+
+#Dropping a Row
+df = df.drop(index=1)
+print(df)
+
+#Grouping Data
+#Grouping data by a column
+grouped = df.groupby('City')
+print(grouped['Age'].mean())
+
+#Aggregating Data
+#Aggregating Data using multiple functions
+Aggregated = df.groupby('City').agg({'Age': ['mean', 'min', 'max']})
+
+#merging DataFrames
+
+df1 = pd.DataFrame({'ID':[1,2,3], 'Name':['Alice','Bob','Charlie']})
+df2 = pd.DataFrame({'ID':[1,2,4], 'Salary':[50000,60000,70000]})
+
+#Merging DataFrames on a Common Column
+merger_df = pd.merge(df1, df2, on='ID', how='inner') #inner means intersection and outer means union
+print(merger_df)
 
 
-#Basic Array operation-Element-wise Operations
-arr = np.array([1,2,3,4,5])
+#Joining DataFrames
+df1 = pd.DataFrame({'Name': ['Alice', 'Bob'], 'Age': [25,30]}, index=[0,1])
+df2 = pd.DataFrame({'City': ['New York', 'Los Angeles']}, index=[0,2])
 
-#Element-wise addition
-print(arr + 2)
-
-#Element-wise multiplication
-print(arr * 2)
-
-#Element-wise subtraction
-print(arr - 2)
-
-#Element-wise division
-print(arr / 2)
-
-
-#Basic Array Operations-MAthematical functions
-arr = np.array([1,2,3,4,5])
-
-#Square root
-print(np.sqrt(arr))
-
-#Exponential
-print(np.exp(arr))
-
-#Logarithim
-print(np.log))
-
-#Sine
-print(np.sin(arr))
-
-#cos
-print(np.cos(arr))
-
-
-#Indexing and Slicing-Indexing
-arr = np.array([1,2,3,4,5])
-#Accessing element
-print(arr[0]) #First element
-print(arr[-1]) #Last Element
-
-
-#Indexing and Slicing-Slicing
-arr = np.array([1,2,3,4,5])
-#Slicing array
-print(arr[1:4]) #Elements from index 1 to 4
-print(arr[:3]) #First 3 elements
-print(arr[2:]) #Elements from index 2 to end
-
-
-#Indexing and Slicing-Advanced Indexing
-arr = np.array([1,2,3,4,5])
-#Boolean indexing
-print(arr[arr>3])
-#FAncy indexing
-indices = [0,2,4]   
-print(arr[indices])
-
-
-#Reshaping anad Transposing-Reshaping Arrays
-arr = np.array([[1,2,3],[4,5,6]])
-#REshaping the array
-reshaped = arr.reshape((3,2))
-print(reshaped)
-
-
-#Reshaping anad Transposing-Transposing Arrays
-arr = np.array([[1,2,3],[4,5,6]])
-#Transposing the array
-transposed = arr.T
-print(transposed)
-
-
-#Aggregation Function-Sum and Mean
-arr = np.array([[1,2,3],[4,5,6]])
-#Sum of all elements
-print(np.sum(arr))
-
-#sum along columns
-print(np.sum(arr, axis=0))
-
-#sum along rows
-print(np.sum(arr.axis=1))
-
-#MEan of all elements
-print(np.mean(arr))
-
-
-#Aggregation Function - Min and Max
-
-arr = np.array([[1,2,3],[4,5,6]])
-#Minimum value
-print(np.min(arr))
-
-#Maximum value
-print(np.max(arr))
-
-#Index of Minimum value
-print(np.argmin(arr))
-
-#Index of Maximum value
-print(np.argmax(arr))
+#Joining Dataframes on their index
+joined_df = df1.join(df2, how = 'left')
+print(joined_df)
